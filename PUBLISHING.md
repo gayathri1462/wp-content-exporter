@@ -436,13 +436,27 @@ git push origin main --tags
 
 To fully automate publishing on merges to `main`, use the provided GitHub Actions workflow and set an `NPM_TOKEN` repository secret:
 
-1. Create an npm automation token: `npm token create` (or via npm website) and copy its value.
-2. In GitHub, go to Repository → Settings → Secrets → Actions → New repository secret. Name it `NPM_TOKEN` and paste the token.
-3. The workflow `.github/workflows/release.yml` will run on pushes to `main`, execute `npx changeset version`, push the version/changelog commit, then run `npx changeset publish` authenticated via `NPM_TOKEN`.
+
+1. Create an npm automation token:
+
+```bash
+# Create a new automation token (you'll be prompted by npm if using CLI):
+npm token create
+# Or create one via https://www.npmjs.com/settings/<your-username>/tokens
+```
+
+2. In GitHub, go to Repository → Settings → Secrets and create a new Actions secret named `NPM_TOKEN` with the token value.
+
+3. This repository uses a two-step release process:
+
+  - `release-version.yml` (runs on push to `main`) will execute `npx changeset version`, commit version/changelog updates, and push them back to `main`.
+  - `release-publish.yml` (runs on push tags matching `v*.*.*`) will run `npx changeset publish` authenticated via `NPM_TOKEN` to publish the package.
+
+This tag-based publish flow is safer because publishing only occurs after a maintainer creates a version tag (for example `git tag v0.2.0 && git push origin v0.2.0`), giving you a manual checkpoint before releases.
 
 Notes:
-- If you prefer safety, modify the workflow to only publish on tags or require manual approval before the publish step.
-- Make sure branch protection rules allow the workflow to push version commits or adjust the workflow to open a release PR instead.
+- To publish automatically on merge without manual tagging, change `release-publish.yml` trigger to `push: branches: [ main ]` (but be cautious: automatic publishes can be surprising). 
+- If the workflow needs to push commits/tags to protected branches, ensure the Actions bot has appropriate permissions and branch rules allow the push, or configure the workflow to open a PR instead of pushing.
 
 
 ## Troubleshooting
