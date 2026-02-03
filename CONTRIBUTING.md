@@ -309,6 +309,13 @@ After your changes are merged:
 2. **Version bumped** using Changesets
 3. **Published to npm** with next release
 
+Note: these final steps can be automated via CI. To enable automatic releases the repository must
+expose an `NPM_TOKEN` secret (npm automation token) in GitHub repository secrets. A typical
+release workflow will run `npx changeset version` to update versions and changelog, push the
+resulting commit/tags, then run `npx changeset publish` using `NPM_TOKEN` to authenticate to npm.
+If you prefer manual control, maintainers can run `npm run version` and `npm run publish-package`
+locally instead.
+
 See [PUBLISHING.md](PUBLISHING.md) for details.
 
 ## Useful Commands
