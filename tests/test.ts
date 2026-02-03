@@ -1,4 +1,4 @@
-import { exportToCSV, AuthConfig } from "./src/index.js"
+import { exportToCSV, AuthConfig } from "../src/index.js"
 import fs from "fs"
 
 /**
@@ -239,7 +239,7 @@ test("Should build correct auth headers", async () => {
   if (headers.Authorization !== "Bearer mytoken") {
     throw new Error("Should build Bearer token header")
   }
-  console.log("✓ Builds Bearer token header correctly")
+  console.log("✓ Builds Bearer token correctly")
 })
 
 // Test 7: Test pagination parameter

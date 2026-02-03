@@ -35,3 +35,9 @@ yarn-error.log*
 .cache/
 *.csv
 test.csv
+
+# Ignore stray test emit artifacts at repo root
+/test.js
+/test.js.map
+/test.d.ts
+/test.d.ts.map

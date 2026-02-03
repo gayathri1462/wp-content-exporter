@@ -53,7 +53,7 @@ Branch naming conventions:
 ### 2. Make Your Changes
 
 ```bash
-# Edit files in src/ or test.ts
+# Edit files in `src/` or `tests/`
 # Example: Update src/fetch.ts
 
 # Verify changes compile
@@ -185,7 +185,7 @@ throw error
 
 ### Add Tests
 
-For new features, add corresponding tests in `test.ts`:
+For new features, add corresponding tests in `tests/`:
 
 ```typescript
 test("Should handle new feature", async () => {
@@ -345,7 +345,7 @@ wp-content-exporter/
 │   ├── fetch.ts      # WordPress API fetching
 │   ├── csv.ts        # CSV generation
 │   └── index.ts      # Main export
-├── test.ts           # Integration tests
+├── tests/test.ts     # Integration tests
 ├── dist/             # Compiled output (generated)
 ├── package.json      # Dependencies and scripts
 ├── tsconfig.json     # TypeScript configuration

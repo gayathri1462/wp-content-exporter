@@ -5,13 +5,16 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "wp-content-exporter": "dist/cli.js"
+  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc -p tsconfig.test.json",
     "dev": "node --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"ts-node/esm\", pathToFileURL(\"./\"));' src/index.ts",
-    "test:local": "node dist/test.js",
+    "test:local": "node dist/tests/test.js",
     "test": "npm run build && npm run test:local",
     "type-check": "tsc --noEmit",
     "lint": "tsc --strict --noEmit",
@@ -31,7 +34,7 @@
     "data",
     "json2csv"
   ],
-  "author": "",
+  "author": "Gayathri Devi N",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -45,6 +48,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "commander": "^11.1.0",
     "json2csv": "^5.0.7"
   },
   "devDependencies": {
