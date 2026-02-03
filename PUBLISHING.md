@@ -401,6 +401,31 @@ Day 3:
   - Announce on Twitter
 ```
 
+### Common publish error: EUNSCOPED
+
+If you see an error like:
+
+```
+EUNSCOPED Can't restrict access to unscoped packages.
+```
+
+It means the publish step attempted to set restricted access on an unscoped package (package names without an `@scope/` prefix). To fix:
+
+1. Ensure `package.json` has `publishConfig.access` set to `public` for unscoped packages:
+
+```json
+"publishConfig": { "access": "public" }
+```
+
+2. Or publish explicitly with public access:
+
+```bash
+npm publish --access public
+```
+
+The repository includes `publishConfig.access: "public"` so `changeset publish` and `npm publish` will not try to set restricted access for this unscoped package.
+
+
 ## First publish (manual maintainer flow)
 
 For the very first publish, maintainers typically perform these steps locally:
@@ -457,6 +482,35 @@ This tag-based publish flow is safer because publishing only occurs after a main
 Notes:
 - To publish automatically on merge without manual tagging, change `release-publish.yml` trigger to `push: branches: [ main ]` (but be cautious: automatic publishes can be surprising). 
 - If the workflow needs to push commits/tags to protected branches, ensure the Actions bot has appropriate permissions and branch rules allow the push, or configure the workflow to open a PR instead of pushing.
+
+## Local publish with NPM token (option examples)
+
+If you prefer to publish locally using an npm token instead of `npm login`, you can configure your environment temporarily.
+
+Option A — write token to your user `~/.npmrc` (convenient, but persistent until removed):
+
+```bash
+export NPM_TOKEN="your-token-here"
+echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+# publish
+npm publish --access public
+# remove token when done
+rm ~/.npmrc
+```
+
+Option B — set token in npm config (safer to remove later):
+
+```bash
+export NPM_TOKEN="your-token-here"
+npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
+# publish
+npm publish --access public
+# cleanup
+npm config delete //registry.npmjs.org/:_authToken
+unset NPM_TOKEN
+```
+
+Both options will authenticate the publish command non-interactively. We added `publishConfig.access: "public"` in `package.json` so `npm publish` will publish as public by default for this unscoped package.
 
 
 ## Troubleshooting

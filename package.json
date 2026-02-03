@@ -36,6 +36,9 @@
   ],
   "author": "Gayathri Devi N",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/yourusername/wp-content-exporter"
