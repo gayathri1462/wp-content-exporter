@@ -318,6 +318,88 @@ locally instead.
 
 See [PUBLISHING.md](PUBLISHING.md) for details.
 
+## CLI / npx
+
+This project provides a small CLI (`wp-content-exporter`) that is exposed via `bin` in
+`package.json`. You can run it locally during final testing with:
+
+```bash
+# after a successful build
+node dist/cli.js --help
+
+# run an export (example)
+node dist/cli.js export \
+  --endpoint https://example.com \
+  --fields title.rendered,slug \
+  --output ./posts.csv
+```
+
+To test the package as an npx user (local verification before publishing):
+
+```bash
+# create a packed tarball
+npm pack
+
+# run the CLI from the tarball with npx
+npx ./wp-content-exporter-*.tgz export --endpoint https://example.com --fields title.rendered,slug --output ./posts.csv
+
+# cleanup
+rm wp-content-exporter-*.tgz
+```
+
+## Final testing & first publish (quick checklist)
+
+1. Verify repository metadata in `package.json` (author, repository, bugs, homepage, license).
+2. Run unit/integration tests and type checks:
+
+```bash
+npm run build
+npm test
+npm run type-check
+```
+
+3. Smoke-test the CLI locally:
+
+```bash
+node dist/cli.js --help
+# (optional) run an export against a staging WordPress instance
+```
+
+4. Create a changeset describing the release (if not already created in the PR):
+
+```bash
+npm run changeset
+# choose patch/minor/major and add a short description
+```
+
+5. For the *first* publish (maintainer action):
+
+```bash
+# update version/changelog locally
+npm run version
+
+# publish to npm (requires npm login or NPM_TOKEN)
+npm publish --access public
+```
+
+Or use the automated workflow (requires `NPM_TOKEN` secret):
+
+```text
+# merge your PR to main; CI will run the release workflow which executes
+# `npx changeset version` and `npx changeset publish` when changesets exist.
+```
+
+## How to raise PRs and update the package next time
+
+- Create a feature/fix branch and implement changes in `src/`.
+- Add or update tests in `tests/` and ensure they pass locally.
+- Add a changeset if the change requires a release (`npm run changeset`).
+- Open a PR with a descriptive title and link to the changeset file if present.
+- CI will run build/tests/type-check on the PR; address any failures.
+- After merge, the release workflow will pick up changesets and publish (if `NPM_TOKEN` is configured). If you prefer manual publishing, maintainers can run `npm run version` and `npm run publish-package` locally.
+
+If you want me to also add a short `CONTRIBUTING.md` example that shows a minimal PR + changeset flow, I can add that.
+
 ## Useful Commands
 
 ```bash
