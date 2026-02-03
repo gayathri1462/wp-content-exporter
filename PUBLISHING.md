@@ -133,6 +133,40 @@ tar -tzf wp-content-exporter-0.1.0.tgz | head -20
 rm wp-content-exporter-0.1.0.tgz
 ```
 
+## Final local verification (recommended)
+
+Before publishing, perform a final local verification to ensure the CLI and package behave as expected.
+
+```bash
+# Build and type-check
+npm run build
+npm run type-check
+
+# Run tests
+npm test
+
+# Smoke-test CLI
+node dist/cli.js --help
+# Optional: run an export against a staging WP instance
+node dist/cli.js export --endpoint https://staging.example.com --fields title.rendered,slug --output ./staging-posts.csv
+```
+
+## Local npx test (verify publish artifact locally)
+
+Test the package as an npx user before publishing by creating a tarball and running it with `npx`:
+
+```bash
+# Create a packed tarball of the package
+npm pack
+
+# Run the CLI from the tarball using npx
+npx ./wp-content-exporter-*.tgz export --endpoint https://example.com --fields title.rendered,slug --output ./posts.csv
+
+# Inspect outputs and cleanup
+rm wp-content-exporter-*.tgz
+```
+
+
 ## Creating Changesets
 
 Changesets track changes and automatically update versions and changelogs.
@@ -366,6 +400,50 @@ Day 3:
   - Create GitHub release
   - Announce on Twitter
 ```
+
+## First publish (manual maintainer flow)
+
+For the very first publish, maintainers typically perform these steps locally:
+
+```bash
+# 1. Ensure you are logged into npm or have an automation token
+npm login
+
+# 2. Create a changeset describing the release (if not created in the PR)
+npm run changeset
+
+# 3. Update versions and changelog locally
+npm run version
+
+# 4. Run final verification and smoke tests
+npm run build
+npm test
+npm run type-check
+node dist/cli.js --help
+
+# 5. Create a package tarball and optionally smoke-run it with npx
+npm pack
+npx ./wp-content-exporter-*.tgz --help
+
+# 6. Publish to npm
+npm publish --access public
+
+# 7. Push tags and changes
+git push origin main --tags
+```
+
+## Automated publish (CI)
+
+To fully automate publishing on merges to `main`, use the provided GitHub Actions workflow and set an `NPM_TOKEN` repository secret:
+
+1. Create an npm automation token: `npm token create` (or via npm website) and copy its value.
+2. In GitHub, go to Repository → Settings → Secrets → Actions → New repository secret. Name it `NPM_TOKEN` and paste the token.
+3. The workflow `.github/workflows/release.yml` will run on pushes to `main`, execute `npx changeset version`, push the version/changelog commit, then run `npx changeset publish` authenticated via `NPM_TOKEN`.
+
+Notes:
+- If you prefer safety, modify the workflow to only publish on tags or require manual approval before the publish step.
+- Make sure branch protection rules allow the workflow to push version commits or adjust the workflow to open a release PR instead.
+
 
 ## Troubleshooting
 
