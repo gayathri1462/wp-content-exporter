@@ -475,6 +475,7 @@ wp-content-exporter/
 
 ## Resources
 
+- 📦 [npm Package](https://www.npmjs.com/package/wp-content-exporter)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [npm Documentation](https://docs.npmjs.com/)
 - [GitHub Guides](https://guides.github.com/)

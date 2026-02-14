@@ -1,5 +1,8 @@
 # wp-content-exporter
 
+[![npm version](https://img.shields.io/npm/v/wp-content-exporter.svg)](https://www.npmjs.com/package/wp-content-exporter)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Export WordPress CMS data to CSV format, perfect for headless CMS setups and Framer integration.
 
 Automatically handles WordPress REST API pagination, supports multiple authentication methods, and flattens nested JSON fields to create clean, spreadsheet-friendly CSV output.
@@ -552,6 +555,7 @@ Contributions welcome! Please:
 
 ## Support
 
+- 📦 [npm Package](https://www.npmjs.com/package/wp-content-exporter)
 - 📖 [GitHub Repository](https://github.com/gayathri1462/wp-content-exporter)
 - 📚 [Full Documentation](README.md)
 - 🤝 [Contributing Guide](CONTRIBUTING.md)
