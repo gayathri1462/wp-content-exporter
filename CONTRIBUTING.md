@@ -22,7 +22,7 @@ Thank you for your interest in contributing! This document provides guidelines a
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/wp-content-exporter.git
+git clone https://github.com/gayathri1462/wp-content-exporter.git
 cd wp-content-exporter
 
 # Install dependencies
@@ -100,7 +100,7 @@ git push origin feature/your-feature-name
 
 ### 5. Create a Pull Request
 
-1. Go to [GitHub repository](https://github.com/yourusername/wp-content-exporter)
+1. Go to [GitHub repository](https://github.com/gayathri1462/wp-content-exporter)
 2. Click "New Pull Request"
 3. Select your branch
 4. Fill in the PR template:
@@ -269,10 +269,9 @@ export function myFunction(name: Type): Type {
 - Handle errors securely (don't expose internal details)
 - Review for injection vulnerabilities
 
-## Questions & Discussions
+## Questions 
 
-- Create an [Issue](https://github.com/yourusername/wp-content-exporter/issues) for bugs
-- Start a [Discussion](https://github.com/yourusername/wp-content-exporter/discussions) for questions
+- Create an [Issue](https://github.com/gayathri1462/wp-content-exporter/issues) for bugs
 - Comment on related issues
 
 ## Review Process
@@ -301,22 +300,53 @@ Consistent, high-quality contributions may earn you maintainer status:
 - Demonstrate understanding of codebase
 - Show commitment to project quality
 
-## Version Release
+## Releasing and Publishing
 
-After your changes are merged:
+This project uses [Changesets](https://github.com/changesets/changesets) for version management and publishing.
 
-1. **Changelog entry** created automatically
-2. **Version bumped** using Changesets
-3. **Published to npm** with next release
+### 1. Create a Changeset
 
-Note: these final steps can be automated via CI. To enable automatic releases the repository must
-expose an `NPM_TOKEN` secret (npm automation token) in GitHub repository secrets. A typical
-release workflow will run `npx changeset version` to update versions and changelog, push the
-resulting commit/tags, then run `npx changeset publish` using `NPM_TOKEN` to authenticate to npm.
-If you prefer manual control, maintainers can run `npm run version` and `npm run publish-package`
-locally instead.
+If your changes require a new version (patch, minor, or major), create a changeset:
 
-See [PUBLISHING.md](PUBLISHING.md) for details.
+```bash
+npm run changeset
+```
+
+Follow the prompts to select the bump type and provide a brief description.
+
+### 2. Versioning (Maintainers Only)
+
+To update versions and generate the changelog:
+
+```bash
+# Updates package.json and CHANGELOG.md
+npm run version
+```
+
+### 3. Publishing to npm (Maintainers Only)
+
+Ensure you are logged into npm (`npm login`), then run:
+
+```bash
+# Build, type-check, and publish
+npm run publish-package
+```
+
+Alternatively, you can publish manually:
+
+```bash
+npm run build
+npm publish --access public
+```
+
+### 4. Post-Publish
+
+After publishing, push the new tags to GitHub:
+
+```bash
+git push origin main --tags
+```
+
 
 ## CLI / npx
 
@@ -439,7 +469,6 @@ wp-content-exporter/
 ├── package.json      # Dependencies and scripts
 ├── tsconfig.json     # TypeScript configuration
 ├── README.md         # User documentation
-├── PUBLISHING.md     # Publishing guide
 ├── CONTRIBUTING.md   # This file
 └── CHANGELOG.md      # Version history
 ```

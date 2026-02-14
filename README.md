@@ -447,7 +447,7 @@ Common errors:
 ### Setup
 
 ```bash
-git clone https://github.com/yourusername/wp-content-exporter.git
+git clone https://github.com/gayathri1462/wp-content-exporter.git
 cd wp-content-exporter
 npm install
 ```
@@ -552,9 +552,9 @@ Contributions welcome! Please:
 
 ## Support
 
-- 📖 [Documentation](https://github.com/yourusername/wp-content-exporter)
-- 🐛 [Report Issues](https://github.com/yourusername/wp-content-exporter/issues)
-- 💬 [Discussions](https://github.com/yourusername/wp-content-exporter/discussions)
+- 📖 [GitHub Repository](https://github.com/gayathri1462/wp-content-exporter)
+- 📚 [Full Documentation](README.md)
+- 🤝 [Contributing Guide](CONTRIBUTING.md)
 
 ## Changelog
 

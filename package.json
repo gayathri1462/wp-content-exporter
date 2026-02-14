@@ -41,12 +41,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/wp-content-exporter"
+    "url": "https://github.com/gayathri1462/wp-content-exporter"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/wp-content-exporter/issues"
+    "url": "https://github.com/gayathri1462/wp-content-exporter/issues"
   },
-  "homepage": "https://github.com/yourusername/wp-content-exporter#readme",
+  "homepage": "https://github.com/gayathri1462/wp-content-exporter#readme",
   "engines": {
     "node": ">=18.0.0"
   },
@@ -62,4 +62,3 @@
     "typescript": "^5.9.3"
   }
 }
-
